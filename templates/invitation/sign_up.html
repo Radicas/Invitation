@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        body {
+            padding: 10px;
+            /* overflow: hidden; */
+        }
+        #app {
+            height: calc(100vh);
+            overflow: scroll;
+        }
+        .effect {
+            background: linear-gradient(45deg, rgb(90, 54, 148) 0%, rgb(19, 189, 206) 33%, rgb(0, 148, 217) 66%, rgb(111, 199, 181) 100%);
+        }
+
+        .effect-css {
+            background-size: 400%;
+            background-position: 0 100%;
+            -webkit-animation: gradient 7.5s ease-in-out infinite;
+            animation: gradient 7.5s ease-in-out infinite
+        }
+
+        @-webkit-keyframes gradient {
+            50% {
+                background-position: 100% 0
+            }
+        }
+
+        @keyframes gradient {
+            50% {
+                background-position: 100% 0
+            }
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        form {
+            margin-bottom: 10rem;
+        }
+    </style>
+</head>
+<body class="effect effect-css">
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h2>{{title}}</h2>
+                    <form @submit.prevent="submit">
+                        <div class="form-group" v-for="(item, index) in fields" :key="index">
+                            <label>${item.label}</label>
+                            <input class="form-control" placeholder="" v-model="form[item.key]">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.min.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            delimiters: ['${', '}'],
+            data() {
+                return {
+                    form: {
+                        name: "",
+                        company: "",
+                        position: "",
+                        phone: "",
+                        email: "",
+                        city: "",
+                        note: "",
+                    },
+                    fields: [
+                        { label: "姓名", key: "name" },
+                        { label: "公司", key: "company" },
+                        { label: "职位", key: "position" },
+                        { label: "手机", key: "phone" },
+                        { label: "邮箱", key: "email" },
+                        { label: "城市", key: "city" },
+                        { label: "备注", key: "note" },
+                    ]
+                }
+            },
+            methods: {
+                submit() {
+                    $.ajax({
+                        type: 'POST',
+                        data: this.form,
+                        success(res) {
+                            alert(res.msg)
+                        },
+                        catch(res) {
+                            alert("抱歉，服务器出错了！")
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
