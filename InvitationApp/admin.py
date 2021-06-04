@@ -36,7 +36,7 @@ class InvitationAdmin(ImportExportModelAdmin):
     def send_sms(self, request, queryset):
         # 请在后台确认会议号后，修改下面数字
         meeting = get_meeting_name(1)
-        invitations = Invitation.objects.filter(audit_status=True)
+        invitations = queryset.filter(audit_status=True)
         for invitation in invitations:
             print(meeting.name)
             print(invitation.confirm_number)

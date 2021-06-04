@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!g9^^=87qs$w6(!i36tqe0oggwok8i7^122uf3u60#o0=)g)he'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['58.34.95.10','rededa.com.cn']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -126,6 +126,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # 跨域
 CORS_ALLOW_CREDENTIALS = True
